@@ -1,0 +1,98 @@
+% Steps:
+% Find critical points
+% Find saddles within critical points by computing the eigenvalues of
+% Hessian matrix and checking signs (new script to do all of this)
+% Plot critical points with color coding (saddles diff color/marker)
+% For saddles, evaluate F at point to find level curves
+% Plot level curves around saddles
+
+%% Set Parameter Values
+paramaux = [10, 0.1]; %parameter value
+xmintraj = -5;
+xmaxtraj = 5;
+ymintraj = -5;
+ymaxtraj = 5;
+
+%% Find & Plot Critical Points
+allattractors = equilibriumbinarychoice(0.1, 1);
+figure()
+plot(allattractors(:, 1), allattractors(:, 2), '.', 'Markersize', 20);
+title("All Attractors")
+
+%% Evaluate Hessian Matrix at each CP & Determine CP Type
+
+for i = 1:length(allattractors)
+    x = allattractors(i, 1);
+    y = allattractors(i, 2);
+    [eig_val] = hessian(x, y)
+    if eig_val(1) * eig_val(2) > 0
+        if eig_val(1) < 0 % minimum
+            allattractors(i, 3) = 1; % minimum
+        else % maximum
+            allattractors(i, 3) = 2; % maximum
+        end
+    else % saddle
+        allattractors(i, 3) = 3; % saddle
+    end
+end
+
+colors = [".r", ".g", ".b"];
+
+figure()
+for i = 1:length(allattractors)
+    plot(allattractors(i, 1), allattractors(i, 2), colors(allattractors(i, 3)), 'Markersize', 20)
+    hold on
+end
+title("All Attractors Color Coded")
+
+%% Level Curves for Saddle Points
+
+saddles = allattractors(allattractors(:, 3)==3, 1:2)'; % store saddle points
+
+% %%
+%            if size(allattractors,1)>4
+%                 priorOK = 1;
+%                 attright = allattractors(allattractors(:,1)>0,:);
+%                 [yatt1,indatt1] = min(allattractors(:,2));
+%                 [yatt2,indatt2] = max(allattractors(:,2));
+%                 [yatt3,indatt3] = min(allattractors(:,1));
+%             
+%             if indatt1==indatt2
+%                 priorOK=0;
+%             elseif indatt2==indatt3
+%                 priorOK=0;
+%             elseif indatt3==indatt1
+%                 priorOK=0;
+%             elseif allattractors(indatt1,1)<0
+%                 priorOK=0
+%             elseif allattractors(indatt2,1)<0
+%                 priorOK=0
+%             elseif allattractors(indatt3,1)>0
+%                 priorOK=0
+%             else 
+%             attractors = double([allattractors(indatt1,:)',allattractors(indatt2,:)',allattractors(indatt3,:)']);
+%             saddles = allattractors;
+%             saddles([indatt1,indatt2,indatt3],:)=[];
+%             saddles=saddles';
+% %             attractors
+%             end
+%                           
+%             
+%            end
+% 
+
+%%
+U=@(x,y,param) x.^4+y.^4+y.^3-4*x.^2*y+y.^2+paramaux(1).*x+paramaux(2).*y; %landscape at that parameter value
+
+x1=linspace(xmintraj,xmaxtraj,100); %setting the limits of x
+y1=linspace(ymintraj,ymaxtraj,100);%setting the limits of y
+[X,Y] = meshgrid(x1,y1);
+
+%[mins,sad,Max]=VTD_Lan_Mod_v1_CriticalPointsClas_Compile(param);
+Z= U(X,Y,paramaux);
+
+for j=1:size(saddles,2)
+    contour(X,Y,Z,[U(saddles(1,j), saddles(2,j),paramaux), U(saddles(1,j), saddles(2,j),paramaux)],'b', 'LineWidth',2);
+    hold on
+    scatter(saddles(1,j),saddles(2,j),70,'m', 'filled');
+end
