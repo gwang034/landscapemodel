@@ -7,14 +7,14 @@
 % Plot level curves around saddles
 
 %% Set Parameter Values
-paramaux = [-17, 1]; %parameter value
+paramaux = [0, 1]; %parameter value
 xmintraj = -5;
 xmaxtraj = 5;
 ymintraj = -5;
 ymaxtraj = 5;
 
 %% Find & Plot Critical Points
-allattractors = equilibriumbinarychoice(0.1, 1);
+allattractors = equilibriumbinarychoice(paramaux(1), paramaux(2));
 figure()
 plot(allattractors(:, 1), allattractors(:, 2), '.', 'Markersize', 20);
 title("All Attractors")
@@ -49,7 +49,7 @@ title("All Attractors Color Coded")
 
 saddles = allattractors(allattractors(:, 3)==3, 1:2)'; % store saddle points
 
-U=@(x,y,param) x.^4+y.^4+y.^3-4.*x.^2.*y+y.^2-paramaux(1).*x+paramaux(2).*y; %landscape at that parameter value
+U=@(x,y,param) x.^4+y.^4+y.^3-4.*(x.^2).*y+y.^2-paramaux(1).*x+paramaux(2).*y; %landscape at that parameter value
 
 x1=linspace(xmintraj,xmaxtraj,100); %setting the limits of x
 y1=linspace(ymintraj,ymaxtraj,100);%setting the limits of y
