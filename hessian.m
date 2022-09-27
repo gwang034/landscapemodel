@@ -1,4 +1,4 @@
-function [eig_val] = hessian_eig(x, y)
+function [eig_val] = hessian(x, y)
 % computes the eigenvalues of the hessian matrix given the 
 % coordinates of a critical point
 % Inputs:

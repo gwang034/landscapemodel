@@ -7,6 +7,8 @@
 % Plot level curves around saddles
 
 %% Set Parameter Values
+close all
+
 paramaux = [0, 1]; %parameter value
 xmintraj = -5;
 xmaxtraj = 5;
