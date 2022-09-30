@@ -19,7 +19,7 @@ function binarychoice_plot(paramaux, xmintraj, xmaxtraj, ymintraj, ymaxtraj)
 % Plot level curves around saddles
 
 %% Find Critical Points
-allattractors = equilibriumbinarychoice(paramaux(1), paramaux(2));
+allattractors = binarychoice_eq(paramaux(1), paramaux(2));
 
 % % Uncomment to plot all critical points
 % figure()
