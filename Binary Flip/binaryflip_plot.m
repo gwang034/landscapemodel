@@ -48,7 +48,7 @@ end
 
 saddles = allattractors(allattractors(:, 3)==3, 1:2)'; % store saddle points
 
-U=@(x,y,param) x.^4+y.^4+x.^3-2.*x.*y.^2-x.^2-paramaux(1).*x+paramaux(2).*y; %landscape at that parameter value
+U=@(x,y,param) x.^4+y.^4+x.^3-2.*x.*y.^2-x.^2+paramaux(1).*x+paramaux(2).*y; %landscape at that parameter value
 
 x1=linspace(xmintraj,xmaxtraj,100); % setting the limits of x
 y1=linspace(ymintraj,ymaxtraj,100);% setting the limits of y
