@@ -19,7 +19,7 @@ function binarychoice_plot(paramaux, xmintraj, xmaxtraj, ymintraj, ymaxtraj)
 % Plot level curves around saddles
 
 %% Find Critical Points
-allattractors = binarychoice_eq(paramaux(1), paramaux(2));
+allattractors = equilibriumbinarychoice(paramaux(1), paramaux(2));
 
 % % Uncomment to plot all critical points
 % figure()
@@ -72,6 +72,6 @@ for i = 1:size(allattractors, 1)
     plot(allattractors(i, 1), allattractors(i, 2), colors(allattractors(i, 3)), 'Markersize', 20)
     hold on
 end
-title("Binary Choice - Saddle Point Level Curves")
+title("Saddle Point Level Curves")
 
 end
