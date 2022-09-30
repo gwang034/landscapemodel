@@ -1,4 +1,4 @@
-function [eig_val] = hessian(x, y)
+function [eig_val] = binarychoice_hes(x, y)
 % computes the eigenvalues of the hessian matrix given the 
 % coordinates of a critical point
 % Inputs:

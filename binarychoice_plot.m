@@ -31,7 +31,7 @@ allattractors = equilibriumbinarychoice(paramaux(1), paramaux(2));
 for i = 1:size(allattractors, 1)
     x = allattractors(i, 1);
     y = allattractors(i, 2);
-    [eig_val] = hessian(x, y);
+    [eig_val] = binarychoice_hes(x, y);
     if eig_val(1) * eig_val(2) > 0
         if eig_val(1) < 0 % minimum
             allattractors(i, 3) = 1; % minimum

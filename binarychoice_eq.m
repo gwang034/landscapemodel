@@ -1,4 +1,4 @@
-function allattractors = equilibriumbinarychoice(u,v)
+function allattractors = binarychoice_eq(u,v)
 
 syms r1 r2
 
