@@ -13,6 +13,6 @@ H(1,2) = -8*x;
 H(2,1) = -8*x;
 H(2,2) = 12*y^2 + 6*y + 2;
 
-eig_val = eig(H);
+eig_val = eig(-H);
 
 end
