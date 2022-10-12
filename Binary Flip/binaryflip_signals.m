@@ -1,15 +1,14 @@
-function [p1, p2] = binaryflip_paramplot(xmintraj, xmaxtraj)
+function binaryflip_signals(xmintraj, xmaxtraj, q, M)
 % plots parameter values given range of y values
 % inputs:
 %   xmintraj - the minimum x value of the trajectory
 %   xmaxtraj - the maximum x value of the trajectory
-% outputs:
-%   p1, p2 - the parameter values
+%   q - a linear transformation in the process of changing signaling
+%   expression to parameter expression
+%   M - a linear transformation in the process of changing signaling
+%   expression to parameter expression
 
-% values of x that make the determinant of the Hessian equal 0 given y
 y_fun = @(x) sqrt((-x+3*x^2+6*x^3)/(-5+9*x+18*x^2));
-
-figure()
 
 i = 1;
 for x=xmintraj:0.001:xmaxtraj
@@ -24,13 +23,19 @@ for x=xmintraj:0.001:xmaxtraj
     i = i + 2;
 end
 
-plot(p1, p2, 'b.', 'Markersize', 15)
+param = [p1; p2];
+
+for i = 1:length(param)
+    sig_mol(:, i) = M \ (param(:, i) - q);
+end
+
+figure()
+plot(sig_mol(1,:), sig_mol(2,:), '.')
 hold on
-xlim([-3, 1])
-ylim([-2, 2])
-xlabel('p1')
-ylabel('p2')
-title(['Parameters for x = ', num2str(xmintraj), ':', num2str(xmaxtraj)])
-    
+xlim([-5 5]);
+ylim([-5 5]);
+title('Signaling Molecules')
+xlabel('SMAD4')
+ylabel('beta-cat')
 
 end
