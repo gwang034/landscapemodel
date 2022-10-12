@@ -1,13 +1,14 @@
-function binarychoice_paramplot(ymintraj, ymaxtraj)
+function binarychoice_signals(ymintraj, ymaxtraj, q, M)
 % plots parameter values given range of y values
 % inputs:
 %   ymintraj - the minimum y value of the trajectory
 %   ymaxtraj - the maximum y value of the trajectory
+%   q - a linear transformation in the process of changing signaling
+%   expression to parameter expression
+%   M - a linear transformation in the process of changing signaling
+%   expression to parameter expression
 
-% values of x that make the determinant of the Hessian equal 0 given y
 x_fun = @(y) (sqrt(2)*sqrt(y+3*y^2+6*y^3)) / sqrt(-5 + 9*y + 18*y^2);
-
-figure()
 
 i = 1;
 for y=ymintraj:0.001:ymaxtraj
@@ -21,17 +22,18 @@ for y=ymintraj:0.001:ymaxtraj
     % p2 = real(p2); % only plot real value
     i = i + 2;
 end
-plot(p1, p2, 'b.', 'Markersize', 20)
+param = [p1; p2];
+
+for i = 1:length(param)
+    sig_mol(:, i) = M \ (param(:, i) - q);
+end
+
+figure()
+plot(sig_mol(1,:), sig_mol(2,:), '.')
 hold on
-xlim([-1.5, 1.5])
-ylim([-0.5, 2.5])
-xlabel('p1')
-ylabel('p2')
-title(['Parameters for y = ', num2str(ymintraj), ':', num2str(ymaxtraj)])
-    
-
-
-
-
-
+xlim([-5 5]);
+ylim([-5 5]);
+title('Signaling Molecules')
+xlabel('SMAD4')
+ylabel('beta-cat')
 end
